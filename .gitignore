@@ -1,3 +1,8 @@
+### GBIF-API-Tools ###
+design/schema.sql
+**/src/main/resources/secrets.properties
+nohup.out
+
 HELP.md
 .gradle
 build/
