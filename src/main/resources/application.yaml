@@ -1,0 +1,49 @@
+server:
+  error:
+    include-message: "always"
+---
+spring:
+  config:
+    activate:
+      on-profile: "development | testing"
+    import: "secret-properties.yaml"
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/gbif"
+    # username: "username" (imported)
+    # password: "password" (imported)
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          schema-generation:
+            script:
+              append: false
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              # action defines if and how a db schema should be generated ("none"/"drop-and-create")
+              action: "drop-and-create"
+            scripts:
+              action: "create"
+              create-target: "src/main/resources/database/schema-generated.sql"
+            # create-source defines source(s) for script-creation ("script"/"metadata-then-script")
+            create-source: "metadata-then-script"
+            # create-script-source must be pointed to a complete schema if create-source is "script"
+            # and to a file with additions to the schema if create-source is "metadata-then-script"
+            create-script-source: "src/main/resources/database/schema-additions.sql"
+  graphql:
+    graphiql:
+      enabled: true
+    cors:
+      allowed-origins = "*"
+    schema:
+      printer:
+        enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: "production | staging"

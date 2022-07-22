@@ -1,6 +1,6 @@
 ### GBIF-API-Tools ###
-design/schema.sql
-**/src/main/resources/secrets.properties
+**/src/main/resources/secret*
+**/src/main/resources/database/schema.sql
 nohup.out
 
 HELP.md
@@ -23,7 +23,6 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
 *.iws
 *.iml
 *.ipr

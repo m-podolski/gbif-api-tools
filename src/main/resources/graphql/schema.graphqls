@@ -1,0 +1,50 @@
+input TaxonInput {
+    path: String
+    nameCanonical: String
+    authorship: String
+    numDescendants: Int
+    numOccurrences: Int
+    extinct: Boolean
+}
+
+type Taxon {
+    id: ID!
+    path: String!
+    nameCanonical: String!
+    authorship: String!
+    numDescendants: Int!
+    numOccurrences: Int!
+    extinct: Boolean!
+}
+
+enum Depth {
+    KINGDOM
+    PHYLUM
+    CLASS
+    ORDER
+    FAMILY
+    GENUS
+    SPECIES
+}
+
+type Query {
+    findAllTaxa: [Taxon]
+    findTaxon(id: ID!): Taxon
+}
+
+type FetchResponse {
+    message: String!
+    success: Boolean
+    taxa: [Taxon!]!
+}
+
+type Mutation {
+    # Used only for quick experiments in development
+    createTaxa(taxa: [TaxonInput!]!): Taxon
+    # Fetches from GBIF-API and stores the list in the database
+    # Mainly used for development to limit the amount fetched while still being
+    # able to construct a coherent tree
+    fetchGbifTaxa(depth: Depth = KINGDOM) : FetchResponse
+    # This is used to generate the complete dataset in production manually
+    fetchAllGbifTaxa : FetchResponse
+}
