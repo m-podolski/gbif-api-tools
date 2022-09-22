@@ -1,5 +1,6 @@
 ### GBIF-API-Tools ###
 **/src/main/resources/secret*
+!**/src/main/resources/secret-properties-template.*
 **/src/main/resources/database/schema.sql
 nohup.out
 
