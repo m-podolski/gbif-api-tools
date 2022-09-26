@@ -24,8 +24,8 @@ spring:
         persistence:
           schema-generation:
             database:
-              # action defines if and how a db schema should be generated ("none"/"drop-and-create")
-              action: "drop-and-create"
+              # action defines if and how a db schema should be generated ("none"/"create"/"update")
+              action: "update"
             scripts:
               action: "create"
               create-target: "src/main/resources/database/schema-generated.sql"

@@ -1,7 +1,10 @@
 # Commit
-Add single-file yaml-config
+
+Complete graphql schema and fetching
 
 ## Backlog
+
+Switch to observables/subscriptions
 
 > 0.1.0
 
@@ -10,5 +13,7 @@ Add single-file yaml-config
 # Changelog
 
 ## Added
+
 ## Changed
+
 ## Fixed

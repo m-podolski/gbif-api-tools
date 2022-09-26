@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaxonRepository extends JpaRepository<Taxon, Integer> {
 
-  Taxon getTaxonByNameCanonical(String nameCanonical);
 }

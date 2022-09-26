@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -33,9 +34,9 @@ public class TaxonRepositoryTest {
 
     Taxon savedTaxon = testEntityManager.persistFlushFind(taxon);
 
-    Taxon foundTaxon = taxonRepository.getTaxonByNameCanonical(taxon.getNameCanonical());
+    Optional<Taxon> foundTaxon = taxonRepository.findById(savedTaxon.getId());
 
-    then(foundTaxon.getId()).isNotNull();
-    then(foundTaxon.getNameCanonical()).isEqualTo(savedTaxon.getNameCanonical());
+    then(foundTaxon.get()
+      .getNameCanonical()).isEqualTo(savedTaxon.getNameCanonical());
   }
 }

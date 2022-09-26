@@ -3,6 +3,7 @@ package com.github.mpodolski.gbifapitools.backbonetree;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ public class TaxonService {
 
   private final TaxonRepository taxonRepository;
 
-  public List<Taxon> findTaxa() {
+  public List<Taxon> findAllTaxa() {
     return taxonRepository.findAll();
   }
 
@@ -20,7 +21,7 @@ public class TaxonService {
     return taxonRepository.findById(id);
   }
 
-  public Taxon createTaxa(Taxon taxon) {
-    return taxonRepository.save(taxon);
+  public List<Taxon> createTaxa(ArrayList<Taxon> taxon) {
+    return taxonRepository.saveAll(taxon);
   }
 }

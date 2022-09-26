@@ -1,12 +1,3 @@
-input TaxonInput {
-    path: String
-    nameCanonical: String
-    authorship: String
-    numDescendants: Int
-    numOccurrences: Int
-    extinct: Boolean
-}
-
 type Taxon {
     id: ID!
     path: String!
@@ -17,7 +8,30 @@ type Taxon {
     extinct: Boolean!
 }
 
-enum Depth {
+input TaxonInput {
+    path: String!
+    nameCanonical: String!
+    authorship: String!
+    numDescendants: Int!
+    numOccurrences: Int!
+    extinct: Boolean!
+}
+
+type Query {
+    findAllTaxa: [Taxon]!
+    findTaxon(id: ID!): Taxon
+}
+
+type Mutation {
+    # Used only in development
+    createTaxa(taxa: [TaxonInput!]!): [Taxon!]!
+    # Used in development to limit the amount fetched and the size of the tree
+    fetchGbifTaxaToLevel(depth: Level! = KINGDOM) : FetchResponse!
+    # Used to generate the complete dataset in production manually
+    fetchGbifTaxa : FetchResponse!
+}
+
+enum Level {
     KINGDOM
     PHYLUM
     CLASS
@@ -27,24 +41,8 @@ enum Depth {
     SPECIES
 }
 
-type Query {
-    findAllTaxa: [Taxon]
-    findTaxon(id: ID!): Taxon
-}
-
 type FetchResponse {
     message: String!
-    success: Boolean
+    success: Boolean!
     taxa: [Taxon!]!
-}
-
-type Mutation {
-    # Used only for quick experiments in development
-    createTaxa(taxa: [TaxonInput!]!): Taxon
-    # Fetches from GBIF-API and stores the list in the database
-    # Mainly used for development to limit the amount fetched while still being
-    # able to construct a coherent tree
-    fetchGbifTaxa(depth: Depth = KINGDOM) : FetchResponse
-    # This is used to generate the complete dataset in production manually
-    fetchAllGbifTaxa : FetchResponse
 }
