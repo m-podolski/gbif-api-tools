@@ -1,0 +1,12 @@
+query FindAllTaxa {
+    findAllTaxa {
+        nameCanonical
+        extinct
+    }
+}
+
+query FindTaxon($taxonId: ID!) {
+    findTaxon(id: $taxonId) {
+        authorship
+    }
+}
