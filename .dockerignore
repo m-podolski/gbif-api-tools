@@ -1,0 +1,7 @@
+### GBIF-API-TOOLS ###
+**/src/main/resources/**/secret*
+!**/src/main/resources/**/secret-**-template*
+
+### IntelliJ IDEA ###
+.idea
+.run

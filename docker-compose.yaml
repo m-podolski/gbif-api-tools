@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: gat-app
+    build:
+      context: ./
+      target: development
+    volumes:
+      - /home/malte/dev/gbif-api-tools:/app
+      - /home/malte/.gradle:/root/.gradle
+    ports:
+      - "8080:8080"
+    secrets:
+      - backend-properties
+    environment:
+      SPRING_PROFILES_ACTIVE: "development,docker"
+      SPRING_CONFIG_LOCATION: "file:./src/main/resources/application.yaml"
+    depends_on:
+      - "database"
+  database:
+    container_name: gat-db
+    build:
+      context: ./
+      dockerfile: Dockerfile.database
+      target: development
+    restart: always
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    ports:
+      - "8081:5432"
+    env_file:
+      - ./src/main/resources/database/secret-db-passwords.env
+
+volumes:
+  database-data:
+
+secrets:
+  backend-properties:
+    file: ./src/main/resources/secret-properties.yaml

@@ -1,0 +1,5 @@
+# This file is copied into the production image to serve as external configuration
+spring:
+  config:
+    activate:
+      on-profile: "production | staging"

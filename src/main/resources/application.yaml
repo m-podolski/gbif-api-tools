@@ -1,16 +1,14 @@
 server:
   error:
     include-message: "always"
+spring:
+  jmx:
+    enabled: false
 ---
 spring:
   config:
     activate:
       on-profile: "development | testing"
-    import: "secret-properties.yaml"
-  datasource:
-    url: "jdbc:postgresql://localhost:5432/gbif"
-    # username: "username" (imported)
-    # password: "password" (imported)
   jpa:
     show-sql: true
     properties:
@@ -28,7 +26,7 @@ spring:
               action: "update"
             scripts:
               action: "create"
-              create-target: "src/main/resources/database/schema-generated.sql"
+              create-target: "src/main/resources/database/02-schema-generated.sql"
             # create-source defines source(s) for script-creation ("script"/"metadata-then-script")
             create-source: "metadata-then-script"
             # create-script-source must be pointed to a complete schema if create-source is "script"
@@ -46,4 +44,38 @@ spring:
 spring:
   config:
     activate:
+      on-profile: "local"
+    import: "secret-properties-local.yaml"
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/gbif"
+---
+spring:
+  config:
+    activate:
+      on-profile: "docker"
+    import: "secret-properties-docker.yaml"
+  datasource:
+    url: "jdbc:postgresql://gat-db:5432/gat"
+---
+spring:
+  config:
+    activate:
+      on-profile: "local-docker"
+    import: "secret-properties-docker.yaml"
+  datasource:
+    url: "jdbc:postgresql://localhost:8081/gat"
+---
+spring:
+  config:
+    activate:
       on-profile: "production | staging"
+    import: "secret-properties-docker.yaml"
+  datasource:
+  url: "jdbc:postgresql://gat-db:5432/gat"
+  jpa:
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              action: "none"
