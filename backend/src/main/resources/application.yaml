@@ -26,7 +26,7 @@ spring:
               action: "update"
             scripts:
               action: "create"
-              create-target: "src/main/resources/database/02-schema-generated.sql"
+              create-target: "src/main/resources/database/schema-generated.sql"
             # create-source defines source(s) for script-creation ("script"/"metadata-then-script")
             create-source: "metadata-then-script"
             # create-script-source must be pointed to a complete schema if create-source is "script"

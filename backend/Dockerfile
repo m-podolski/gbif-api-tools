@@ -1,4 +1,4 @@
-FROM gradle:7.4.1-jdk17-alpine as development
+FROM gradle:7.5.1-jdk17-alpine as development
 # Synchronize gradle image version with wrapper!
 
 WORKDIR /app
@@ -8,7 +8,7 @@ ENTRYPOINT ["gradle", "bootRun"]
 FROM development as build
 
 WORKDIR /app
-COPY .. .
+COPY . .
 # Using "assemble" instead of "build" to test before building in CI
 RUN gradle assemble
 
@@ -18,7 +18,7 @@ RUN mkdir /app/$EXTRACTED && \
     -jar build/libs/*.jar extract \
     --destination $EXTRACTED
 
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/bash"]
 
 
 FROM eclipse-temurin:17.0.4.1_1-jre-alpine as production

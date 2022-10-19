@@ -44,6 +44,13 @@ Also `SPRING_CONFIG_LOCATION` fixes the config location in development for faste
 
 The profile  **testing** is defined in `build.gradle` by the task "test".
 
+### Database Model and Entities
+
+As backend and database are separated into different modules/images and Gradle is only set up 
+for the backend the auto-generated SQL-schema has to be updated manually from 
+`backend/src/main/resources/database/schema-generated.sql` to `database/init/02-schema-generated.
+sql`.
+
 ### VS Code
 
 VS Code workspaces are ignored by git because I use it mainly with the SQL-Tools extension which

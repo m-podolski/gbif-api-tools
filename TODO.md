@@ -1,17 +1,17 @@
 # Commit
 
-Dockerize app
+Set up CI
 
 ## Backlog
 
-- Dockerize app
-  - ADD COMMENT REGARDING PERMISSION CHANGES
 - Set up CI
-  - set up multi-module project
   - configure Github Actions
+    - activate gradle scans
   - ? Add gradle plugin to trigger build via Dockerfile
+  
 - Add db testcontainers
   - add appropriate profiles for testing scenarios
+  
 - Optimize database
   - use C/POSIX locale for database LC_COLLATE, LC_CTYPE
   - ? indexing methods and operator classes
@@ -22,10 +22,10 @@ Dockerize app
 
 - Add web client for data fetching
 
+> 0.1.0
+
 - make db production-ready
   - switch to SSL/add certificates
-
-> 0.1.0
 
 ## Planning
 

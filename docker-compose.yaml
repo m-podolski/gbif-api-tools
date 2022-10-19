@@ -15,7 +15,7 @@ services:
       - backend-properties
     environment:
       SPRING_PROFILES_ACTIVE: "development,docker"
-      SPRING_CONFIG_LOCATION: "file:./backend/src/main/resources/application.yaml"
+      SPRING_CONFIG_LOCATION: "file:./src/main/resources/application.yaml"
     depends_on:
       - "database"
   database:
@@ -29,7 +29,7 @@ services:
     ports:
       - "8081:5432"
     env_file:
-      - backend/src/main/resources/database/secret-db-passwords.env
+      - database/config/secret-db-passwords.env
 
 volumes:
   database-data:
