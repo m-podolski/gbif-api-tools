@@ -1,13 +1,7 @@
 ### GBIF-API-Tools ###
-**/src/main/resources/**/secret*
-!**/src/main/resources/**/secret-**-template*
-
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### STS ###
 .apt_generated
@@ -23,7 +17,7 @@ bin/
 
 ### IntelliJ IDEA ###
 *.iws
-*.iml
+#*.iml
 *.ipr
 out/
 !**/src/main/**/out/

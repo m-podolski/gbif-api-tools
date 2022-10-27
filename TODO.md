@@ -7,6 +7,7 @@ Dockerize app
 - Dockerize app
   - ADD COMMENT REGARDING PERMISSION CHANGES
 - Set up CI
+  - set up multi-module project
   - configure Github Actions
   - ? Add gradle plugin to trigger build via Dockerfile
 - Add db testcontainers

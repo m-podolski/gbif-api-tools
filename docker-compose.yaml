@@ -4,10 +4,10 @@ services:
   backend:
     container_name: gat-app
     build:
-      context: ./
+      context: ./backend
       target: development
     volumes:
-      - /home/malte/dev/gbif-api-tools:/app
+      - /home/malte/dev/gbif-api-tools/backend:/app
       - /home/malte/.gradle:/root/.gradle
     ports:
       - "8080:8080"
@@ -21,8 +21,7 @@ services:
   database:
     container_name: gat-db
     build:
-      context: ./
-      dockerfile: Dockerfile.database
+      context: ./database
       target: development
     restart: always
     volumes:
@@ -30,11 +29,11 @@ services:
     ports:
       - "8081:5432"
     env_file:
-      - ./src/main/resources/database/secret-db-passwords.env
+      - database/config/secret-db-passwords.env
 
 volumes:
   database-data:
 
 secrets:
   backend-properties:
-    file: ./src/main/resources/secret-properties.yaml
+    file: backend/src/main/resources/secret-properties-docker.yaml

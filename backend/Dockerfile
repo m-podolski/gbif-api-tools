@@ -18,7 +18,7 @@ RUN mkdir /app/$EXTRACTED && \
     -jar build/libs/*.jar extract \
     --destination $EXTRACTED
 
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/bash"]
 
 
 FROM eclipse-temurin:17.0.4.1_1-jre-alpine as production
@@ -38,7 +38,7 @@ RUN addgroup $GROUP && \
 USER $USER
 
 ENV SPRING_PROFILES_ACTIVE="production"
-COPY ./src/main/resources/production.yaml ./
+COPY src/main/resources/production.yaml ./
 
 EXPOSE 8080
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]

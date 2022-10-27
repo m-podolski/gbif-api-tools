@@ -1,0 +1,10 @@
+### GBIF-API-Tools Backend ###
+**/src/main/resources/**/secret*
+!**/src/main/resources/**/secret-**-template*
+
+HELP.md
+.gradle
+build/
+!backend/gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
