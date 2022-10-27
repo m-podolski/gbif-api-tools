@@ -4,7 +4,7 @@ services:
   backend:
     container_name: gat-app
     build:
-      context: ./
+      context: ./backend
       target: development
     volumes:
       - /home/malte/dev/gbif-api-tools:/app
@@ -15,14 +15,13 @@ services:
       - backend-properties
     environment:
       SPRING_PROFILES_ACTIVE: "development,docker"
-      SPRING_CONFIG_LOCATION: "file:./src/main/resources/application.yaml"
+      SPRING_CONFIG_LOCATION: "file:./backend/src/main/resources/application.yaml"
     depends_on:
       - "database"
   database:
     container_name: gat-db
     build:
-      context: ./
-      dockerfile: Dockerfile.database
+      context: ./database
       target: development
     restart: always
     volumes:
@@ -30,11 +29,11 @@ services:
     ports:
       - "8081:5432"
     env_file:
-      - ./src/main/resources/database/secret-db-passwords.env
+      - backend/src/main/resources/database/secret-db-passwords.env
 
 volumes:
   database-data:
 
 secrets:
   backend-properties:
-    file: ./src/main/resources/secret-properties.yaml
+    file: backend/src/main/resources/secret-properties.yaml

@@ -8,7 +8,7 @@ ENTRYPOINT ["gradle", "bootRun"]
 FROM development as build
 
 WORKDIR /app
-COPY . .
+COPY .. .
 # Using "assemble" instead of "build" to test before building in CI
 RUN gradle assemble
 
@@ -38,7 +38,7 @@ RUN addgroup $GROUP && \
 USER $USER
 
 ENV SPRING_PROFILES_ACTIVE="production"
-COPY ./src/main/resources/production.yaml ./
+COPY src/main/resources/production.yaml ./
 
 EXPOSE 8080
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]

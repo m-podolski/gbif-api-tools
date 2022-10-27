@@ -1,11 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Development_Local" type="Application" factoryName="Application">
+  <configuration default="false" name="Development Local" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="17" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <envs>
       <env name="SPRING_PROFILES_ACTIVE" value="development,local" />
       <env name="SPRING_CONFIG_LOCATION" value="file:./src/main/resources/application.yaml" />
     </envs>
     <option name="MAIN_CLASS_NAME" value="com.github.mpodolski.gbifapitools.GbifApiToolsApplication" />
     <module name="gbif-api-tools.main" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.github.mpodolski.gbifapitools.*" />

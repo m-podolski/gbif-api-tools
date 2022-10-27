@@ -5,7 +5,7 @@ plugins {
   id 'com.dorongold.task-tree' version '2.1.0'
 }
 
-group = 'com.github.mpodolski'
+group = 'com.github.mpodolski.gbifapitools'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -35,9 +35,9 @@ dependencies {
 
 tasks.named('test') {
   useJUnitPlatform()
-  systemProperty("spring.profiles.active", "testing")
+  systemProperty('spring.profiles.active', 'testing')
 }
 
-tasks.named("jar") {
+tasks.named('jar') {
   enabled = false
 }
