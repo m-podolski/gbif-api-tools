@@ -1,0 +1,76 @@
+name: Docker CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  database-build-publish:
+    uses: ./.github/workflows/ci-docker-build-publish.yaml
+    with:
+      module: database
+    secrets: inherit
+
+  backend-test:
+    runs-on: ubuntu-22.04
+    needs: [ database-build-publish ]
+    services:
+      database:
+        image: ${{ format('mpodolski88/gbif-api-tools-database:{0}', (
+          startsWith(github.ref, 'refs/tags/v') && 'latest' ||
+          startsWith(github.ref, 'refs/heads/') && 'main')
+          ) }}
+        env:
+          POSTGRES_PASSWORD: postgres_password
+          DB_ROLE_ADMIN_PW: db_role_admin_pw
+          DB_ROLE_GAT_PW: db_role_gat_pw
+        volumes:
+          - database-data:/var/lib/postgresql/data
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    container:
+      # Synchronize gradle version in dockerfile, ci-workflow and wrapper!
+      image: gradle:7.5.1-jdk17-jammy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+        # gradle-build-action mainly used for build scan handling
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Run Tests with Gradle
+        id: gradle
+        env:
+          SPRING_PROFILES_ACTIVE: testing,external
+          SPRING_CONFIG_LOCATION: file:./src/main/resources/application.yaml
+          BE_HOST: database
+          BE_PORT: 5432
+          BE_DB: gat
+          BE_DB_USER: gat
+          BE_DB_PW: db_role_gat_pw
+        run: cd backend && gradle check --scan
+
+      - name: Upload Build Reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-reports
+          path: backend/build/reports/
+
+      - name: Print Build Scan Link
+        run: echo ${{ steps.gradle.outputs.build-scan-url }}
+
+  backend-build-publish:
+    needs: [ backend-test ]
+    uses: ./.github/workflows/ci-docker-build-publish.yaml
+    with:
+      module: backend
+    secrets: inherit

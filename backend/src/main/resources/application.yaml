@@ -1,6 +1,6 @@
 server:
   error:
-    include-message: "always"
+    include-message: always
 spring:
   jmx:
     enabled: false
@@ -8,7 +8,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "development | testing"
+      on-profile: development | testing
   jpa:
     show-sql: true
     properties:
@@ -23,20 +23,20 @@ spring:
           schema-generation:
             database:
               # action defines if and how a db schema should be generated ("none"/"create"/"update")
-              action: "update"
+              action: update
             scripts:
-              action: "create"
-              create-target: "src/main/resources/database/02-schema-generated.sql"
+              action: create
+              create-target: src/main/resources/database/schema-generated.sql
             # create-source defines source(s) for script-creation ("script"/"metadata-then-script")
-            create-source: "metadata-then-script"
+            create-source: metadata-then-script
             # create-script-source must be pointed to a complete schema if create-source is "script"
             # and to a file with additions to the schema if create-source is "metadata-then-script"
-            create-script-source: "src/main/resources/database/schema-additions.sql"
+            create-script-source: src/main/resources/database/schema-additions.sql
   graphql:
     graphiql:
       enabled: true
     cors:
-      allowed-origins = "*"
+      allowed-origins: "*"
     schema:
       printer:
         enabled: true
@@ -44,38 +44,43 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "local"
-    import: "secret-properties-local.yaml"
+      on-profile: local
   datasource:
-    url: "jdbc:postgresql://localhost:5432/gbif"
+    url: jdbc:postgresql://localhost:5432/gbif
+    username: gbif
+    password: password
 ---
 spring:
   config:
     activate:
-      on-profile: "docker"
-    import: "secret-properties-docker.yaml"
+      on-profile: local-docker
   datasource:
-    url: "jdbc:postgresql://gat-db:5432/gat"
+    url: jdbc:postgresql://localhost:8081/gat
+    username: gat
+    password: db_role_gat_pw
 ---
 spring:
   config:
     activate:
-      on-profile: "local-docker"
-    import: "secret-properties-docker.yaml"
+      on-profile: external
   datasource:
-    url: "jdbc:postgresql://localhost:8081/gat"
+    url: jdbc:postgresql://${BE_HOST}:${BE_PORT}/${BE_DB}
+    username: ${BE_DB_USER}
+    password: ${BE_DB_PW}
 ---
 spring:
   config:
     activate:
-      on-profile: "production | staging"
-    import: "secret-properties-docker.yaml"
+      on-profile: production | staging
+    import: secret-properties-docker.yaml
   datasource:
-  url: "jdbc:postgresql://gat-db:5432/gat"
+    url: jdbc:postgresql://${BE_HOST}:${BE_PORT}/${BE_DB}
+    username: ${BE_DB_USER}
+    password: ${BE_DB_PW}
   jpa:
     properties:
       javax:
         persistence:
           schema-generation:
             database:
-              action: "none"
+              action: none

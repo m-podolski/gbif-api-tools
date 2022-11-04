@@ -1,6 +1,7 @@
 ### GBIF-API-Tools Backend ###
-**/src/main/resources/**/secret*
-!**/src/main/resources/**/secret-**-template*
+**/secret*
+!**/secret-**-template*
+
 
 HELP.md
 .gradle

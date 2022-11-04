@@ -6,16 +6,22 @@ services:
     build:
       context: ./backend
       target: development
+      secrets:
+        - be-user-pw
     volumes:
       - /home/malte/dev/gbif-api-tools/backend:/app
-      - /home/malte/.gradle:/root/.gradle
     ports:
       - "8080:8080"
     secrets:
-      - backend-properties
+      - be-properties
     environment:
-      SPRING_PROFILES_ACTIVE: "development,docker"
+      SPRING_PROFILES_ACTIVE: "development,external"
       SPRING_CONFIG_LOCATION: "file:./src/main/resources/application.yaml"
+      BE_HOST: gat-db
+      BE_PORT: 5432
+      BE_DB: gat
+      BE_DB_USER: gat
+      BE_DB_PW: db_role_gat_pw
     depends_on:
       - "database"
   database:
@@ -28,12 +34,16 @@ services:
       - database-data:/var/lib/postgresql/data
     ports:
       - "8081:5432"
-    env_file:
-      - database/config/secret-db-passwords.env
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+      DB_ROLE_ADMIN_PW: db_role_admin_pw
+      DB_ROLE_GAT_PW: db_role_gat_pw
 
 volumes:
   database-data:
 
 secrets:
-  backend-properties:
+  be-user-pw:
+    file: backend/secret-be-user-pw
+  be-properties:
     file: backend/src/main/resources/secret-properties-docker.yaml

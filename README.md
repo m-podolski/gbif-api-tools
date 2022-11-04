@@ -38,11 +38,9 @@ The running configs of the container are at `/var/lib/postgresql/data` (PGDATA).
 
 The base profiles **development** and **production** are set by the environment
 variable `SPRING_PROFILES_ACTIVE`. Either in the IDEA-run-configuration, `docker-compose.yaml` or
-the docker image. **development** has to be used together with either **local** or **docker** to add
-the appropriate datasources.
-Also `SPRING_CONFIG_LOCATION` fixes the config location in development for faster startup.
-
-The profile  **testing** is defined in `build.gradle` by the task "test".
+the docker image. **development** has to be used together with either **local** or **local-docker**
+or **external** to add the appropriate datasources. Also `SPRING_CONFIG_LOCATION` fixes the config
+location in development for faster startup.
 
 ### Database Model and Entities
 
@@ -53,9 +51,11 @@ sql`.
 
 ### CI
 
-CI is configured for Github Actions and runs everything in containers which are pushed to Dokcer
-Hub. The gradle build-scan results are available as a ZIP-archive in the workflow and the link to
-the report page on Gradle Enterprise is printed into the logs as a job-step.
+CI is configured for Github Actions and runs everything in containers which are pushed to Docker
+Hub. Note that the CI job-container for testing is not using the Dockerfile but must be separately
+configured to use the same image version. The gradle build-scan results are available as a
+ZIP-archive in the workflow and the link to the report page on Gradle Enterprise is printed into the
+logs as a job-step.
 
 ### VS Code
 
