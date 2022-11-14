@@ -9,4 +9,4 @@
         path varchar(50)[] not null,
         primary key (id)
     );
-CREATE INDEX taxon_path_gin_idx ON taxon USING GIN (path) WITH (fastupdate=off);
+CREATE INDEX taxon_path_gin_idx ON taxon USING GIN (path);

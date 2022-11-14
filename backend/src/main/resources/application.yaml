@@ -23,7 +23,8 @@ spring:
           schema-generation:
             database:
               # action defines if and how a db schema should be generated ("none"/"create"/"update")
-              action: update
+#              action: update
+              action: create
             scripts:
               action: create
               create-target: src/main/resources/database/schema-generated.sql
@@ -46,9 +47,9 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:postgresql://localhost:5432/gbif
-    username: gbif
-    password: password
+    url: jdbc:postgresql://localhost:5432/gat
+    username: gat
+    password: gat
 ---
 spring:
   config:

@@ -1,14 +1,13 @@
 # Commit
 
-Set up CI with Github Actions
+Upgrade to Postgres 15
 
 ## Backlog
 
-- Add db testcontainers
-  - add appropriate profiles for testing scenarios
-  
-- Optimize database
-  - use C/POSIX locale for database LC_COLLATE, LC_CTYPE
+- Upgrade to Postgres 15
+  - put in new config-file
+  - fix failing test / indexing
+  - ? use C/POSIX locale for database LC_COLLATE, LC_CTYPE
   - ? indexing methods and operator classes
 
 - Switch to observables/subscriptions

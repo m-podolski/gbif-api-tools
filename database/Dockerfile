@@ -1,9 +1,9 @@
-FROM postgres:14.5-bullseye as development
+FROM postgres:15-bullseye as development
 
 # Put config into non-PGDATA-location first to enable initd to run
 # then copy config into PGDATA with init script
 WORKDIR /etc/postgresql
-COPY --chown=postgres:postgres ./config/postgresql.conf ./
+COPY --chown=postgres:postgres config/postgresql.conf ./
 
 WORKDIR /docker-entrypoint-initdb.d
 COPY ./init/01-init-postgres.sh ./
