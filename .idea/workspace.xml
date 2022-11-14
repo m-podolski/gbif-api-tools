@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4e36808f-b7d8-4778-b232-b873a7ae891e" name="Changes" comment="Set up CI with Github Actions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/database/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/config/postgresql.conf" beforeDir="false" afterPath="$PROJECT_DIR$/database/config/postgresql-docker14.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/github/mpodolski/gbifapitools/backbonetree/TaxonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/github/mpodolski/gbifapitools/backbonetree/TaxonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/github/mpodolski/gbifapitools/backbonetree/BackboneTreeControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/github/mpodolski/gbifapitools/backbonetree/BackboneTreeControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +53,24 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="gbif-api-tools" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="gbif-api-tools" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <item name="testCompileClasspath" type="62daadca:ExternalSystemViewDefaultContributor$DependencyScopeExternalSystemNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="gbif-api-tools" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <item name="testCompileClasspath" type="62daadca:ExternalSystemViewDefaultContributor$DependencyScopeExternalSystemNode" />
+                <item name="org.springframework.boot:spring-boot-starter-test:2.7.1" type="b3323d55:ExternalSystemViewDefaultContributor$DependencyExternalSystemNode" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -65,13 +84,15 @@
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
         <entry key="com.haulmont.jpb.jpaPalette" value="true" />
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
     <option name="myId2Visible">
       <map>
-        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
         <entry key="com.haulmont.jpb.jpaStructure" value="false" />
       </map>
     </option>
@@ -92,11 +113,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/home/malte/dev/gbif-api-tools/database/config",
+    "last_opened_file_path": "/home/malte/dev/gbif-api-tools/backend/.run",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="Push.Settings">
@@ -114,7 +135,30 @@
       <recent name="$PROJECT_DIR$/backend" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Testing Local All">
+  <component name="RunManager" selected="Gradle.Testing Local BackboneTreeControllerTest">
+    <configuration name="BackboneTreeControllerTest.findTaxon" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.github.mpodolski.gbifapitools.backbonetree.BackboneTreeControllerTest.findTaxon&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="TaxonRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -134,6 +178,35 @@
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Testing Local-Docker BackboneTreeControllerTest" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="env">
+          <map>
+            <entry key="SPRING_CONFIG_LOCATION" value="file:./src/main/resources/application.yaml" />
+            <entry key="SPRING_PROFILES_ACTIVE" value="testing,local-docker" />
+          </map>
+        </option>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.github.mpodolski.gbifapitools.backbonetree.BackboneTreeControllerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
@@ -180,18 +253,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="backend/Dockerfile production" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
-      <deployment type="dockerfile">
-        <settings>
-          <option name="imageTag" value="eclipse-temurin17.0.4.1_1-jre-alpine_production" />
-          <option name="buildCliOptions" value="--target production" />
-          <option name="buildKitEnabled" value="true" />
-          <option name="buildOnly" value="true" />
-          <option name="sourceFilePath" value="backend/Dockerfile" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration name="docker-compose.yaml.backend: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -224,21 +285,23 @@
       <item itemvalue="Docker.Development Docker" />
       <item itemvalue="Docker.docker-compose.yaml.backend: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yaml.database: Compose Deployment" />
-      <item itemvalue="Docker.backend/Dockerfile production" />
       <item itemvalue="Gradle.Testing Local All" />
       <item itemvalue="Gradle.Testing Local-Docker All" />
       <item itemvalue="Gradle.Testing Local App Context" />
+      <item itemvalue="Gradle.Testing Local BackboneTreeControllerTest" />
+      <item itemvalue="Gradle.Testing Local-Docker BackboneTreeControllerTest" />
+      <item itemvalue="Gradle.BackboneTreeControllerTest.findTaxon" />
       <item itemvalue="Gradle.TaxonRepositoryTest" />
       <item itemvalue="Gradle.backend [assemble]" />
       <item itemvalue="Gradle.backend [build]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.BackboneTreeControllerTest.findTaxon" />
         <item itemvalue="Docker.docker-compose.yaml.database: Compose Deployment" />
         <item itemvalue="Gradle.TaxonRepositoryTest" />
         <item itemvalue="Gradle.backend [assemble]" />
         <item itemvalue="Gradle.backend [build]" />
-        <item itemvalue="Docker.backend/Dockerfile production" />
       </list>
     </recent_temporary>
   </component>

@@ -21,10 +21,6 @@ spring:
       javax:
         persistence:
           schema-generation:
-            database:
-              # action defines if and how a db schema should be generated ("none"/"create"/"update")
-#              action: update
-              action: create
             scripts:
               action: create
               create-target: src/main/resources/database/schema-generated.sql
@@ -41,6 +37,32 @@ spring:
     schema:
       printer:
         enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  jpa:
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              # action defines if and how a db schema should be generated
+              # ("none"/"drop-and-create"/"create"/"update")
+              action: update
+---
+spring:
+  config:
+    activate:
+      on-profile: testing
+  jpa:
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              action: drop-and-create
 ---
 spring:
   config:

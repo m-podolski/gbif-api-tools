@@ -3,42 +3,41 @@ package com.github.mpodolski.gbifapitools.backbonetree;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureHttpGraphQlTester
+@AutoConfigureTestEntityManager
+@Transactional
 public class BackboneTreeControllerTest {
 
   @Autowired
   HttpGraphQlTester tester;
 
-  @Test
-  void findAllTaxaTest() {
-    this.tester.documentName("queries")
-      .operationName("FindAllTaxa")
-      .execute()
-      .path("findAllTaxa")
-      .hasValue();
-  }
+  @Autowired
+  private TestEntityManager testEntityManager;
+
+  Taxon taxon = Taxon.builder()
+    .path(Arrays.asList("path", "to", "taxon"))
+    .nameCanonical("Cocos nucifera")
+    .authorship("Me")
+    .extinct(false)
+    .numDescendants(1L)
+    .numOccurrences(1L)
+    .build();
 
   @Test
-  void findAllTaxonTest() {
-    this.tester.documentName("queries")
-      .operationName("FindTaxon")
-      .variable("taxonId", 1)
-      .execute()
-      .path("findTaxon.authorship")
-      .entity(String.class)
-      .isEqualTo("Me");
-  }
-
-  @Test
-  void createTaxaTest() {
+  void createTaxa() {
 
     int listLength = 2;
 
@@ -46,12 +45,12 @@ public class BackboneTreeControllerTest {
 
     for (int i = 0; i < listLength; i++) {
       Map<String, Object> taxon = new HashMap<>();
-      taxon.put("path", Arrays.asList("path", "to", "taxon"));
-      taxon.put("nameCanonical", "Cocos nucifera");
-      taxon.put("authorship", "Me");
-      taxon.put("numDescendants", 1l);
-      taxon.put("numOccurrences", 1l);
-      taxon.put("extinct", false);
+      taxon.put("path", this.taxon.getPath());
+      taxon.put("nameCanonical", this.taxon.getNameCanonical());
+      taxon.put("authorship", this.taxon.getAuthorship());
+      taxon.put("numDescendants", this.taxon.getNumDescendants());
+      taxon.put("numOccurrences", this.taxon.getNumOccurrences());
+      taxon.put("extinct", this.taxon.getExtinct());
 
       taxa.add(taxon);
     }
@@ -64,6 +63,32 @@ public class BackboneTreeControllerTest {
       .entityList(Map.class)
       .hasSize(listLength)
       .satisfies(taxaReturned -> assertThat(taxaReturned.get(listLength - 1)
-        .get("nameCanonical")).isEqualTo("Cocos nucifera"));
+        .get("nameCanonical")).isEqualTo(this.taxon.getNameCanonical()));
+  }
+
+  @Test
+  void findAllTaxa() {
+    this.tester.documentName("queries")
+      .operationName("FindAllTaxa")
+      .execute()
+      .path("findAllTaxa")
+      .hasValue();
+  }
+
+  @Test
+  void findTaxon() {
+    Integer savedTaxonId = testEntityManager.persistAndGetId(this.taxon, Integer.class);
+    // Manually committing because HTTPGraphqlTester runs in parallel thread
+    EntityManager entityManager = testEntityManager.getEntityManager();
+    EntityTransaction entityTransaction = entityManager.getTransaction();
+    entityTransaction.commit();
+
+    this.tester.documentName("queries")
+      .operationName("FindTaxon")
+      .variable("taxonId", savedTaxonId)
+      .execute()
+      .path("findTaxon.authorship")
+      .entity(String.class)
+      .isEqualTo(this.taxon.getAuthorship());
   }
 }

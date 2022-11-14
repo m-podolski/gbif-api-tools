@@ -61,3 +61,17 @@ logs as a job-step.
 
 VS Code workspaces are ignored by git because I use it mainly with the SQL-Tools extension which
 saves credentials in it.
+
+### Snippets
+
+#### Database Insert
+
+```
+insert into taxon (id, authorship, extinct, name_canonical, num_descendants, num_occurrences, path) 
+  values (1, 'Me', false, 'Cocos nucifera', 1, 1, '{"path", "to", "taxon"}');
+```
+
+### Issues and Bugs
+
+- Failing controller-test for `FindTaxon` query while working fine when executed
+  manually [(see Stackoverflow)](https://stackoverflow.com/questions/74460453/why-is-my-data-not-persisted-accessible-in-an-spring-boot-integration-test-with)

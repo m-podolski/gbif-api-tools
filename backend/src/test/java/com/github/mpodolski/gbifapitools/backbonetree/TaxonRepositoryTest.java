@@ -26,7 +26,8 @@ public class TaxonRepositoryTest {
     Taxon taxon = Taxon.builder()
       .path(Arrays.asList("path", "to", "taxon"))
       .nameCanonical("Cocos nucifera")
-      .authorship("Me").extinct(false)
+      .authorship("Me")
+      .extinct(false)
       .numDescendants(1l)
       .numOccurrences(1l)
       .build();

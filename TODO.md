@@ -1,12 +1,10 @@
 # Commit
 
-Upgrade to Postgres 15
+Fix failing test "findTaxon"
 
 ## Backlog
 
-- Upgrade to Postgres 15
-  - put in new config-file
-  - fix failing test / indexing
+- Optimize database indexing
   - ? use C/POSIX locale for database LC_COLLATE, LC_CTYPE
   - ? indexing methods and operator classes
 
