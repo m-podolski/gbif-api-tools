@@ -1,12 +1,8 @@
 # Commit
 
-Fix failing test "findTaxon"
+Set database locale to C.utf-8
 
 ## Backlog
-
-- Optimize database indexing
-  - ? use C/POSIX locale for database LC_COLLATE, LC_CTYPE
-  - ? indexing methods and operator classes
 
 - Switch to observables/subscriptions
   - app code
