@@ -16,6 +16,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+.idea/workspace.xml
 *.iws
 #*.iml
 *.ipr
@@ -32,4 +33,3 @@ out/
 
 ### VS Code ###
 .vscode/
-*.code-workspace

@@ -1,5 +1,6 @@
 mutation CreateTaxa($taxa: [TaxonInput!]!) {
     createTaxa(taxa: $taxa) {
+        path
         nameCanonical
     }
 }

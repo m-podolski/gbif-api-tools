@@ -21,7 +21,29 @@ public class TaxonService {
     return taxonRepository.findById(id);
   }
 
-  public List<Taxon> createTaxa(ArrayList<Taxon> taxon) {
-    return taxonRepository.saveAll(taxon);
+  private List<Taxon> removeBracketsFromPath(ArrayList<Taxon> taxa) {
+    return taxa.stream()
+      .map(taxon -> {
+        List<String> path = taxon.getPath();
+        Boolean isBracketed = path.get(0)
+          .matches("[\\[].+");
+
+        if (isBracketed) {
+          path.set(0, path.get(0)
+            .toString()
+            .substring(1));
+          path.set(path.size() - 1, path.get(path.size() - 1)
+            .toString()
+            .substring(0, path.get(path.size() - 1)
+              .length() - 1));
+        }
+
+        return taxon;
+      })
+      .toList();
+  }
+
+  public List<Taxon> createTaxa(ArrayList<Taxon> taxa) {
+    return taxonRepository.saveAll(removeBracketsFromPath(taxa));
   }
 }

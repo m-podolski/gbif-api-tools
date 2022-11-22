@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Testing Local-Docker All" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Testing Integration Local TaxonRepository" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="env">
         <map>
           <entry key="SPRING_CONFIG_LOCATION" value="file:./src/main/resources/application.yaml" />
-          <entry key="SPRING_PROFILES_ACTIVE" value="testing,local-docker" />
+          <entry key="SPRING_PROFILES_ACTIVE" value="testing,integration,local" />
         </map>
       </option>
       <option name="executionName" />
@@ -17,11 +17,13 @@
       <option name="taskNames">
         <list>
           <option value=":test" />
+          <option value="--tests" />
+          <option value="&quot;com.github.mpodolski.gbifapitools.backbonetree.TaxonRepositoryIntegrationTest&quot;" />
         </list>
       </option>
       <option name="vmOptions" />
     </ExternalSystemSettings>
-    <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+    <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
     <DebugAllEnabled>false</DebugAllEnabled>
     <method v="2" />

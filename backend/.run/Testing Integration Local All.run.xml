@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Testing Local All" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Testing Integration Local All" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="env">
         <map>
           <entry key="SPRING_CONFIG_LOCATION" value="file:./src/main/resources/application.yaml" />
-          <entry key="SPRING_PROFILES_ACTIVE" value="testing,local" />
+          <entry key="SPRING_PROFILES_ACTIVE" value="testing,integration,local" />
         </map>
       </option>
       <option name="executionName" />

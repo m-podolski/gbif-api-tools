@@ -1,10 +1,10 @@
 # Commit
 
-Set database locale to C.utf-8
+Fix stringified brackets in Taxon.path from graphql
 
 ## Backlog
 
-- Switch to observables/subscriptions
+- Switch to observables
   - app code
   - graphql-schema/test-queries
 

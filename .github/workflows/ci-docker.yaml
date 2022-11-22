@@ -49,7 +49,7 @@ jobs:
       - name: Run Tests with Gradle
         id: gradle
         env:
-          SPRING_PROFILES_ACTIVE: testing,external
+          SPRING_PROFILES_ACTIVE: testing,integration,external
           SPRING_CONFIG_LOCATION: file:./src/main/resources/application.yaml
           BE_HOST: database
           BE_PORT: 5432

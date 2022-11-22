@@ -36,11 +36,10 @@ The running configs of the container are at `/var/lib/postgresql/data` (PGDATA).
 
 #### Profiles
 
-The base profiles **development** and **production** are set by the environment
-variable `SPRING_PROFILES_ACTIVE`. Either in the IDEA-run-configuration, `docker-compose.yaml` or
-the docker image. **development** has to be used together with either **local** or **local-docker**
-or **external** to add the appropriate datasources. Also `SPRING_CONFIG_LOCATION` fixes the config
-location in development for faster startup.
+The base profiles are **development** and **production**. They are set either in the
+IDEA-run-configuration, `docker-compose.yaml` or the docker image. **development** has to be used
+together with either **local** or **local-docker** or **external** to add the appropriate
+datasources. The same is true for using **testing** with **integration**.
 
 ### Database Model and Entities
 
@@ -59,8 +58,12 @@ logs as a job-step.
 
 ### VS Code
 
-VS Code workspaces are ignored by git because I use it mainly with the SQL-Tools extension which
-saves credentials in it.
+Note that the SQL-Tools extension for VS-Code saves credentials in the workspace-file!
+
+### Issues and Bugs
+
+- Graphql parses square brackets into List-values. Bracket removal is implemented in service.
+  [(see Stackoverflow)](https://stackoverflow.com/questions/74460453/why-is-my-data-not-persisted-accessible-in-an-spring-boot-integration-test-with)
 
 ### Snippets
 
@@ -71,7 +74,3 @@ insert into taxon (id, authorship, extinct, name_canonical, num_descendants, num
   values (1, 'Me', false, 'Cocos nucifera', 1, 1, '{"path", "to", "taxon"}');
 ```
 
-### Issues and Bugs
-
-- Failing controller-test for `FindTaxon` query while working fine when executed
-  manually [(see Stackoverflow)](https://stackoverflow.com/questions/74460453/why-is-my-data-not-persisted-accessible-in-an-spring-boot-integration-test-with)

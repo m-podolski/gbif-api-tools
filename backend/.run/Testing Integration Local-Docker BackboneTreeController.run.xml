@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Testing Local App Context" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Testing Integration Local-Docker BackboneTreeController" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="env">
         <map>
           <entry key="SPRING_CONFIG_LOCATION" value="file:./src/main/resources/application.yaml" />
-          <entry key="SPRING_PROFILES_ACTIVE" value="testing,local" />
+          <entry key="SPRING_PROFILES_ACTIVE" value="testing,integration,local-docker" />
         </map>
       </option>
       <option name="executionName" />
@@ -18,7 +18,7 @@
         <list>
           <option value=":test" />
           <option value="--tests" />
-          <option value="&quot;com.github.mpodolski.gbifapitools.GbifToolsApplicationTests&quot;" />
+          <option value="&quot;com.github.mpodolski.gbifapitools.backbonetree.BackboneTreeControllerIntegrationTest&quot;" />
         </list>
       </option>
       <option name="vmOptions" />

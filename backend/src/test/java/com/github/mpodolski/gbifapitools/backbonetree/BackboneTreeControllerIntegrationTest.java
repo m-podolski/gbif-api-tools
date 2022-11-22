@@ -1,6 +1,7 @@
 package com.github.mpodolski.gbifapitools.backbonetree;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
@@ -19,7 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureHttpGraphQlTester
 @AutoConfigureTestEntityManager
 @Transactional
-public class BackboneTreeControllerTest {
+@EnabledIfEnvironmentVariable(
+  named = "SPRING_PROFILES_ACTIVE",
+  matches = ".*integration.*")
+public class BackboneTreeControllerIntegrationTest {
 
   @Autowired
   HttpGraphQlTester tester;
@@ -28,7 +32,7 @@ public class BackboneTreeControllerTest {
   private TestEntityManager testEntityManager;
 
   Taxon taxon = Taxon.builder()
-    .path(Arrays.asList("path", "to", "taxon"))
+    .path(new ArrayList<>(Arrays.asList("path", "to", "taxon")))
     .nameCanonical("Cocos nucifera")
     .authorship("Me")
     .extinct(false)
@@ -36,11 +40,32 @@ public class BackboneTreeControllerTest {
     .numOccurrences(1L)
     .build();
 
-  @Test
-  void createTaxa() {
+  @Test void findAllTaxa() {
+    this.tester.documentName("queries")
+      .operationName("FindAllTaxa")
+      .execute()
+      .path("findAllTaxa")
+      .hasValue();
+  }
 
+  @Test void findTaxon() {
+    Integer savedTaxonId = testEntityManager.persistAndGetId(this.taxon, Integer.class);
+    // Manually committing because HTTPGraphqlTester runs in parallel thread
+    EntityManager entityManager = testEntityManager.getEntityManager();
+    EntityTransaction entityTransaction = entityManager.getTransaction();
+    entityTransaction.commit();
+
+    this.tester.documentName("queries")
+      .operationName("FindTaxon")
+      .variable("taxonId", savedTaxonId)
+      .execute()
+      .path("findTaxon.authorship")
+      .entity(String.class)
+      .isEqualTo(this.taxon.getAuthorship());
+  }
+
+  @Test void createTaxa() {
     int listLength = 2;
-
     List<Map<String, Object>> taxa = new ArrayList<>(listLength);
 
     for (int i = 0; i < listLength; i++) {
@@ -62,33 +87,9 @@ public class BackboneTreeControllerTest {
       .path("createTaxa[*]")
       .entityList(Map.class)
       .hasSize(listLength)
-      .satisfies(taxaReturned -> assertThat(taxaReturned.get(listLength - 1)
-        .get("nameCanonical")).isEqualTo(this.taxon.getNameCanonical()));
-  }
-
-  @Test
-  void findAllTaxa() {
-    this.tester.documentName("queries")
-      .operationName("FindAllTaxa")
-      .execute()
-      .path("findAllTaxa")
-      .hasValue();
-  }
-
-  @Test
-  void findTaxon() {
-    Integer savedTaxonId = testEntityManager.persistAndGetId(this.taxon, Integer.class);
-    // Manually committing because HTTPGraphqlTester runs in parallel thread
-    EntityManager entityManager = testEntityManager.getEntityManager();
-    EntityTransaction entityTransaction = entityManager.getTransaction();
-    entityTransaction.commit();
-
-    this.tester.documentName("queries")
-      .operationName("FindTaxon")
-      .variable("taxonId", savedTaxonId)
-      .execute()
-      .path("findTaxon.authorship")
-      .entity(String.class)
-      .isEqualTo(this.taxon.getAuthorship());
+      .satisfies(
+        taxaReturned -> assertThat(taxaReturned.get(listLength - 1)
+          .get("nameCanonical")).isEqualTo(
+          this.taxon.getNameCanonical()));
   }
 }
