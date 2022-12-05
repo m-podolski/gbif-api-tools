@@ -1,12 +1,13 @@
 # Commit
 
-Fix stringified brackets in Taxon.path from graphql
+Switch to reactive
 
 ## Backlog
 
-- Switch to observables
-  - app code
-  - graphql-schema/test-queries
+- Switch to reactive
+  - schema generation
+  - graphql-schema
+  - tests
 
 - Add web client for data fetching
 

@@ -45,7 +45,7 @@ datasources. The same is true for using **testing** with **integration**.
 
 As backend and database are separated into different modules/images and Gradle is only set up
 for the backend the auto-generated SQL-schema has to be updated manually from
-`backend/src/main/resources/database/schema-generated.sql` to `database/init/02-schema-generated.
+`backend/src/main/resources/database/schema.sql` to `database/init/02-schema.
 sql`.
 
 ### CI

@@ -5,11 +5,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,7 +22,8 @@ class TaxonServiceTest {
   @InjectMocks
   private TaxonService taxonService;
 
-  @Test void createTaxa() {
+  @Test
+  void createTaxa() {
     Taxon taxonWithBracketedPath = Taxon.builder()
       .path(new ArrayList<>(Arrays.asList("[path", "to", "taxon]")))
       .nameCanonical("Cocos nucifera")
@@ -47,10 +49,13 @@ class TaxonServiceTest {
       taxa.add(taxonWithBracketedPath);
     }
 
-    when(taxonRepository.saveAll(taxa)).thenReturn(taxa);
+    when(taxonRepository.saveAll(taxa)).thenReturn(Flux.fromIterable(taxa));
 
-    assertEquals(taxonWithFixedPath.getPath(), this.taxonService.createTaxa(taxa)
-      .get(listLength - 1)
-      .getPath());
+    StepVerifier.create(this.taxonService.createTaxa(taxa))
+      .expectNextMatches(taxon -> taxon.getPath()
+        .get(0)
+        .equals("path"))
+      .expectNextCount(1L)
+      .verifyComplete();
   }
 }

@@ -1,11 +1,12 @@
 package com.github.mpodolski.gbifapitools.backbonetree;
 
+import com.github.mpodolski.gbifapitools.DatabaseConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-@DataJpaTest
+@DataR2dbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @EnabledIfEnvironmentVariable(
   named = "SPRING_PROFILES_ACTIVE",
@@ -23,10 +24,8 @@ public class TaxonRepositoryIntegrationTest {
   @Autowired
   private TaxonRepository taxonRepository;
 
-  @Autowired
-  private TestEntityManager testEntityManager;
-
-  @Test void createReadTaxon() {
+  @Test
+  void createReadTaxon() {
 
     Taxon taxon = Taxon.builder()
       .path(new ArrayList<>(Arrays.asList("path", "to", "taxon")))
@@ -37,11 +36,14 @@ public class TaxonRepositoryIntegrationTest {
       .numOccurrences(1l)
       .build();
 
-    Taxon savedTaxon = testEntityManager.persistFlushFind(taxon);
-
-    Optional<Taxon> foundTaxon = taxonRepository.findById(savedTaxon.getId());
+    Optional<Taxon> savedTaxon = taxonRepository.save(taxon)
+      .blockOptional();
+    Optional<Taxon> foundTaxon = taxonRepository.findById(savedTaxon.get()
+        .getId())
+      .blockOptional();
 
     then(foundTaxon.get()
-      .getNameCanonical()).isEqualTo(savedTaxon.getNameCanonical());
+      .getNameCanonical()).isEqualTo(savedTaxon.get()
+      .getNameCanonical());
   }
 }

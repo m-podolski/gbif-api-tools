@@ -9,26 +9,6 @@ spring:
   config:
     activate:
       on-profile: development | testing
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        hbm2ddl:
-          schema-generation:
-            script:
-              append: false
-      javax:
-        persistence:
-          schema-generation:
-            scripts:
-              action: create
-              create-target: src/main/resources/database/schema-generated.sql
-            # create-source defines source(s) for script-creation ("script"/"metadata-then-script")
-            create-source: metadata-then-script
-            # create-script-source must be pointed to a complete schema if create-source is "script"
-            # and to a file with additions to the schema if create-source is "metadata-then-script"
-            create-script-source: src/main/resources/database/schema-additions.sql
   graphql:
     graphiql:
       enabled: true
@@ -42,34 +22,18 @@ spring:
   config:
     activate:
       on-profile: development
-  jpa:
-    properties:
-      javax:
-        persistence:
-          schema-generation:
-            database:
-              # action defines if and how a db schema should be generated
-              # ("none"/"drop-and-create"/"create"/"update")
-              action: update
 ---
 spring:
   config:
     activate:
       on-profile: testing
-  jpa:
-    properties:
-      javax:
-        persistence:
-          schema-generation:
-            database:
-              action: drop-and-create
 ---
 spring:
   config:
     activate:
       on-profile: local
-  datasource:
-    url: jdbc:postgresql://localhost:5432/gat
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/gat
     username: gat
     password: gat
 ---
@@ -77,8 +41,8 @@ spring:
   config:
     activate:
       on-profile: local-docker
-  datasource:
-    url: jdbc:postgresql://localhost:8081/gat
+  r2dbc:
+    url: r2dbc:postgresql://localhost:8081/gat
     username: gat
     password: db_role_gat_pw
 ---
@@ -86,8 +50,8 @@ spring:
   config:
     activate:
       on-profile: external
-  datasource:
-    url: jdbc:postgresql://${BE_HOST}:${BE_PORT}/${BE_DB}
+  r2dbc:
+    url: r2dbc:postgresql://${BE_HOST}:${BE_PORT}/${BE_DB}
     username: ${BE_DB_USER}
     password: ${BE_DB_PW}
 ---
@@ -96,14 +60,7 @@ spring:
     activate:
       on-profile: production | staging
     import: secret-properties-docker.yaml
-  datasource:
-    url: jdbc:postgresql://${BE_HOST}:${BE_PORT}/${BE_DB}
+  r2dbc:
+    url: r2dbc:postgresql://${BE_HOST}:${BE_PORT}/${BE_DB}
     username: ${BE_DB_USER}
     password: ${BE_DB_PW}
-  jpa:
-    properties:
-      javax:
-        persistence:
-          schema-generation:
-            database:
-              action: none

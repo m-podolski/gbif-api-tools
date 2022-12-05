@@ -5,6 +5,8 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,18 +20,17 @@ public class BackboneTreeController {
   private final TaxonService taxonService;
 
   @QueryMapping
-  public List<Taxon> findAllTaxa() {
+  public Flux<Taxon> findAllTaxa() {
     return taxonService.findAllTaxa();
   }
 
   @QueryMapping
-  public Taxon findTaxon(@Argument Integer id) {
-    Optional<Taxon> taxon = taxonService.findTaxon(id);
-    return taxon.orElse(null);
+  public Mono<Taxon> findTaxon(@Argument Long id) {
+    return taxonService.findTaxon(id);
   }
 
   @MutationMapping
-  public List<Taxon> createTaxa(@Argument ArrayList<Taxon> taxa) {
+  public Flux<Taxon> createTaxa(@Argument ArrayList<Taxon> taxa) {
     return taxonService.createTaxa(taxa);
   }
 }

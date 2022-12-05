@@ -1,1 +1,0 @@
-CREATE INDEX taxon_path_gin_idx ON taxon USING GIN (path);

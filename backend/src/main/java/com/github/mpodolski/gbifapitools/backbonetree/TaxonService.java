@@ -1,7 +1,10 @@
 package com.github.mpodolski.gbifapitools.backbonetree;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +16,15 @@ public class TaxonService {
 
   private final TaxonRepository taxonRepository;
 
-  public List<Taxon> findAllTaxa() {
+  public Flux<Taxon> testRepo() {
     return taxonRepository.findAll();
   }
 
-  public Optional<Taxon> findTaxon(Integer id) {
+  public Flux<Taxon> findAllTaxa() {
+    return taxonRepository.findAll();
+  }
+
+  public Mono<Taxon> findTaxon(Long id) {
     return taxonRepository.findById(id);
   }
 
@@ -25,7 +32,7 @@ public class TaxonService {
     return taxa.stream()
       .map(taxon -> {
         List<String> path = taxon.getPath();
-        Boolean isBracketed = path.get(0)
+        boolean isBracketed = path.get(0)
           .matches("[\\[].+");
 
         if (isBracketed) {
@@ -37,13 +44,12 @@ public class TaxonService {
             .substring(0, path.get(path.size() - 1)
               .length() - 1));
         }
-
         return taxon;
       })
       .toList();
   }
 
-  public List<Taxon> createTaxa(ArrayList<Taxon> taxa) {
+  public Flux<Taxon> createTaxa(ArrayList<Taxon> taxa) {
     return taxonRepository.saveAll(removeBracketsFromPath(taxa));
   }
 }

@@ -14,6 +14,6 @@ EXPOSE 5432
 FROM development as testing
 
 WORKDIR /docker-entrypoint-initdb.d
-COPY ./init/02-schema-generated.sql ./
+COPY init/02-schema.sql ./
 
 EXPOSE 5432
